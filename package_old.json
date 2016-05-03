@@ -1,0 +1,13 @@
+{
+  "version": "0.0.0",
+  "private": true,
+  "name": "devops-hpe-tasklist",
+  "description": "A simple task list",
+  "devDependencies": {
+    "http-server": "^0.8.0"
+  },
+  "scripts": {
+    "prestart": "npm install",
+    "start": "http-server -a 0.0.0.0 -p 8000 --proxy http://localhost:9000"
+  }
+}

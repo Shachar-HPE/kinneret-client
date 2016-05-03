@@ -9,7 +9,7 @@ describe('TaskList Controller', function () {
         inject(function ($rootScope, $controller, $httpBackend) {
             httpBackend = $httpBackend;
             scope = $rootScope.$new();
-            ctrl = $controller('TaskListCtrl', {$scope: scope});
+            ctrl = $controller('MainCtrl', {$scope: scope});
             httpBackend.expectGET('/tasks').respond(200, []);
 
         });
@@ -24,45 +24,52 @@ describe('TaskList Controller', function () {
         scope.$destroy();
     });
 
-    it('should start with no tasks', function () {
+    var addItem = function(itemName) {
+        httpBackend.expectPOST( '/tasks',
+          {'taskName': itemName,taskContent:'content'}).respond(200,{ id: '999',
+              taskName: itemName,taskContent:'content'});
+        scope.task  = itemName;
+        scope.add();
+        flushAndApply();
+    }
+
+    it('test #1: no tasks', function () {
         flushAndApply();
         expect(scope.tasks).toBeDefined();
         expect(scope.tasks.length).toBe(0);
     });
 
-    it('should add a new task', function () {
-        
-        // define the mock service behavior for the POST request
-        httpBackend.expectPOST( '/tasks', 
-                                {'description': 'hello world'}).respond(200);
-        
-        // define the mock service behavior for the GET request
-        httpBackend.expectGET('/tasks').respond(200, 
-                                                [{ id: '999', 
-                                                   description: 'hello world'}]);
-        
-        // perform the action
-        scope.addTask('hello world');
-        flushAndApply();
-        
+    it('test #2: add a new task', function () {
+        var taskVal = 'task 2';
+        addItem(taskVal);
         // verify resulting state of the scope
         expect(scope.tasks.length).toBe(1);
-        expect(scope.tasks[0].description).toEqual('hello world');
+        expect(scope.tasks[0].taskName).toEqual(taskVal);
         expect(scope.tasks[0].id).toEqual('999');
     });
 
-    it('should delete a task', function () {
-        httpBackend.expectPOST('/tasks', {'description': 'hello world'}).respond(200);
-        httpBackend.expectGET('/tasks').respond(200, [{id: '999', description: 'hello world'}]);
-        scope.addTask('hello world');
-        flushAndApply();
+    it('test #3: delete a task', function () {
+        var taskVal = 'task 2';
+        addItem(taskVal);
         expect(scope.tasks.length).toBe(1);
 
-        httpBackend.expectDELETE('/tasks/999').respond(200);
+        httpBackend.expectDELETE('/tasks/999').respond(200,{'id':999,'taskName':taskVal,'taskContent':'content'});
         httpBackend.expectGET('/tasks').respond(200, []);
-        scope.deleteTask(scope.tasks[0]);
+        scope.deleteTask(scope.tasks.length-1);
+        scope.getTask();
         flushAndApply();
         expect(scope.tasks.length).toBe(0);
+    });
+
+    it('test #4: get task by ID', function () {
+        var taskVal = 'task 4';
+        addItem(taskVal);
+        httpBackend.expectGET('/tasks').respond(200, [{id: '999', taskName: 'task 4','taskContent':'content'}]);
+        expect(scope.tasks.length).toBe(1);
+
+        httpBackend.expectGET('/tasks/999').respond(200, [{id: '999', taskName: 'task 4','taskContent':'content'}]);
+        scope.getTask(999);
+        expect(scope.tasks.length).toBe(1);
     });
 
 });

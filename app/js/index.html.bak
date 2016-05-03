@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="plunker">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>ToDo List</title>
+    <link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="style.css" />
+    <script data-require="angular.js@1.4.x" src="https://code.angularjs.org/1.4.9/angular.js" data-semver="1.4.9"></script>
+    
+    <script src="app.js"></script>
+  </head>
+
+  <body ng-controller="MainCtrl">
+    
+    <div class="container">
+      &nbsp;
+      <h4 align="center">TODO List</h4>
+      &nbsp;
+      <div class="row">
+        <div  class="col-md-3">
+          <div class="input-group">
+            
+            
+            <input ng-model="task" type="text" class="form-control" placeholder="e.g. Write Test" />
+            
+            <span class="input-group-btn">
+              
+              <button  ng-click="add()" class="btn btn-primary" type="button" >
+                
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+       &nbsp;
+      <h4>Tasks</h4>
+        <ol>
+          <li ng-repeat="task in tasks track by task.id">
+            {{task.name}}
+               <span ng-click="deleteTask($index)" class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+          </li>
+        </ol>
+    </div>
+</html>
