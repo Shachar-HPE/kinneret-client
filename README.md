@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/boris-org/kinneret-client.svg?style=svg)](https://circleci.com/gh/boris-org/kinneret-client)
+[![Circle CI](https://circleci.com/gh/Shachar-HPE/kinneret-client.svg?style=svg)](https://circleci.com/gh/Shachar-HPE/kinneret-client)
 [![Travis CI](https://travis-ci.org/boris-org/kinneret-client.svg?branch=master)](https://travis-ci.org/boris-org/kinneret-client)
 [![codecov.io](https://codecov.io/gh/boris-org/kinneret-client/coverage.svg?branch=master)](https://codecov.io/github/boris-org/kinneret-client?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/bd44de0208974b9a87b58b3c8164032c)](https://www.codacy.com/app/boris-org/kinneret-client)
